@@ -11,6 +11,7 @@ import (
 	"github.com/bergsantana/edu-magic-api/internal/core/services"
 	"github.com/bergsantana/edu-magic-api/internal/infrastructure/config"
 	"github.com/bergsantana/edu-magic-api/internal/infrastructure/database"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -32,6 +33,16 @@ func main() {
 
 	// Set up Gin router
 	router := gin.New() // Use gin.New() instead of gin.Default() to avoid double middleware
+
+	// Configure CORS
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000", "https://edu-magic.vercel.app/", "https://*.vercel.app/"}, // Add your frontend URLs
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 
 	// Enable custom detailed logging
 	router.Use(customLogger())
