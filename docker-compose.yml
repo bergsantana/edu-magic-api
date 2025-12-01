@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: education
     ports:
-      - "5545:5546"
+      - "5432:5432"
     volumes:
       - edu-db-data:/var/lib/postgresql/data
 
